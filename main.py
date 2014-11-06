@@ -1,5 +1,3 @@
-from cgi import parse_qs
-
 import re
 import views
 import urls
