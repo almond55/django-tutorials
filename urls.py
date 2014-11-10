@@ -1,6 +1,6 @@
 import views
 
-urls = [
+urlpatterns = [
     (r'^$', views.index),
     (r'hello/?$', views.hello),
     (r'hello/(.+)$', views.hello)
