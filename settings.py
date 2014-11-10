@@ -1,1 +1,1 @@
-ROOT_URLCONF = 'urls'
+ROOT_URLCONF = 'paths.urls'
