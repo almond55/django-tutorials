@@ -1,6 +1,15 @@
+import sys
 import re
 import views
-import urls
+import settings
+import importlib
+
+root_urlconf = settings.ROOT_URLCONF
+try:
+    root_urlconf_module = importlib.import_module(root_urlconf)
+except (ImportError):
+    print 'Module path in settings.py is incorrect. Please check your module path'  
+    sys.exit()
 
 def application(environ, start_response):
     """
@@ -12,7 +21,7 @@ def application(environ, start_response):
     If nothing matches call the `not_found` function.
     """
     path = environ.get('PATH_INFO', '').lstrip('/')
-    for regex, callback in urls.urls:
+    for regex, callback in root_urlconf_module.urlpatterns:
         match = re.search(regex, path)
         if match is not None:
             environ['i_think_i_can_call_this_kirby.args'] = match.groups()
@@ -21,5 +30,5 @@ def application(environ, start_response):
 
 if __name__ == '__main__':
     from wsgiref.simple_server import make_server
-    srv = make_server('localhost', 8081, application)
+    srv = make_server('localhost', 8080, application)
     srv.serve_forever()
